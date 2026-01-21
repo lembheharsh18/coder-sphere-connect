@@ -1,0 +1,77 @@
+
+@keyframes pulse {
+  0% {
+    text-shadow: 0 0 10px rgba(94, 231, 255, 0.7);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(94, 231, 255, 0.9);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(94, 231, 255, 0.7);
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.translate-z-3 {
+  transform: translateZ(3px);
+}
+
+.translate-z-4 {
+  transform: translateZ(4px);
+}
+
+.translate-z-5 {
+  transform: translateZ(5px);
+}
+
+.translate-z-8 {
+  transform: translateZ(8px);
+}
+
+.translate-z-10 {
+  transform: translateZ(10px);
+}
+
+.floating-code {
+  position: absolute;
+  color: rgba(94, 231, 255, 0.2);
+  font-family: monospace;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(94, 231, 255, 0.5);
+  box-shadow: 0 0 10px rgba(94, 231, 255, 0.7);
+  pointer-events: none;
+}
+
+/* Focus styling for form elements */
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  top: -25px !important;
+  left: 0 !important;
+  font-size: 0.8rem !important;
+  color: #5ee7ff !important;
+}
+
+.text-shadow-\[0_0_15px_rgba\(94\,231\,255\,0\.5\)\] {
+  text-shadow: 0 0 15px rgba(94, 231, 255, 0.5);
+}
+
+.text-shadow-\[0_0_10px_rgba\(94\,231\,255\,0\.5\)\] {
+  text-shadow: 0 0 10px rgba(94, 231, 255, 0.5);
+}

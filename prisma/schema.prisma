@@ -1,0 +1,299 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  emailVerified   DateTime?
+  image           String?
+  password        String?
+  bio             String?
+  githubUrl       String?
+  linkedinUrl     String?
+  website         String?
+  location        String?
+  joinedAt        DateTime  @default(now())
+  role            Role      @default(USER)
+  
+  // Relationships
+  skills          Skill[]
+  posts           Post[]
+  comments        Comment[]
+  likes           Like[]
+  projects        Project[]
+  badges          Badge[]
+  mentorships     Mentorship[] @relation("Mentor")
+  mentorshipsAsMentee Mentorship[] @relation("Mentee")
+  forums          Forum[]
+  forumPosts      ForumPost[]
+  contestNotifications ContestNotification[]
+  contestSolutions ContestSolution[]
+  notificationPreferences NotificationPreference?
+  connections     Connection[] @relation("UserConnections")
+  connectedUsers  Connection[] @relation("ConnectedUsers")
+  sentMessages    Message[]    @relation("MessageSender")
+  receivedMessages Message[]   @relation("MessageReceiver")
+  conversations   UserConversation[]
+  reputation      Int      @default(0)
+  rank            String?
+  settings        UserSettings?
+}
+
+model UserSettings {
+  id                String  @id @default(cuid())
+  theme             String  @default("system") // "light", "dark", "system"
+  codeEditorTheme   String  @default("github")
+  enableEmailDigest Boolean @default(true)
+  
+  // Relationships
+  userId            String  @unique
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model NotificationPreference {
+  id                  String  @id @default(cuid())
+  directMessages      Boolean @default(true)
+  connectionRequests  Boolean @default(true)
+  forumActivity       Boolean @default(true)
+  competitions        Boolean @default(true)
+  emailNotifications  Boolean @default(false)
+  
+  // Relationships
+  userId              String  @unique
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Connection {
+  id                String   @id @default(cuid())
+  status            ConnectionStatus @default(PENDING)
+  createdAt         DateTime @default(now())
+  
+  // Relationships
+  userId            String
+  user              User     @relation("UserConnections", fields: [userId], references: [id])
+  connectedUserId   String
+  connectedUser     User     @relation("ConnectedUsers", fields: [connectedUserId], references: [id])
+
+  @@unique([userId, connectedUserId])
+}
+
+model Message {
+  id              String   @id @default(cuid())
+  content         String
+  createdAt       DateTime @default(now())
+  read            Boolean  @default(false)
+  
+  // Relationships
+  senderId        String
+  sender          User     @relation("MessageSender", fields: [senderId], references: [id])
+  receiverId      String
+  receiver        User     @relation("MessageReceiver", fields: [receiverId], references: [id])
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id])
+}
+
+model Conversation {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relationships
+  messages        Message[]
+  participants    UserConversation[]
+}
+
+model UserConversation {
+  id              String   @id @default(cuid())
+  
+  // Relationships
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id])
+  lastReadAt      DateTime @default(now())
+
+  @@unique([userId, conversationId])
+}
+
+model Skill {
+  id         String   @id @default(cuid())
+  name       String
+  level      Level    @default(BEGINNER)
+  yearsOfExperience Int?
+  
+  // Relationships
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id         String   @id @default(cuid())
+  title      String
+  content    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relationships
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  comments   Comment[]
+  likes      Like[]
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  
+  // Relationships
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  postId     String
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relationships
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  postId     String
+  post       Post     @relation(fields: [postId], references: [id])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  repoUrl     String?
+  demoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relationships
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  collaborators String[]
+}
+
+model Badge {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  image       String
+  points      Int      @default(0)
+  earnedDate  DateTime @default(now())
+  
+  // Relationships
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Forum {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  
+  // Relationships
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  posts       ForumPost[]
+}
+
+model ForumPost {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relationships
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  forumId     String
+  forum       Forum    @relation(fields: [forumId], references: [id])
+}
+
+model Mentorship {
+  id          String   @id @default(cuid())
+  status      MentorshipStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relationships
+  mentorId    String
+  mentor      User     @relation("Mentor", fields: [mentorId], references: [id])
+  menteeId    String
+  mentee      User     @relation("Mentee", fields: [menteeId], references: [id])
+}
+
+model ContestNotification {
+  id          String   @id @default(cuid())
+  platform    String
+  contestName String
+  contestUrl  String
+  startTime   DateTime
+  endTime     DateTime
+  
+  // Relationships
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model ContestSolution {
+  id             String   @id @default(cuid())
+  contestId      String
+  problemNumber  String?
+  title          String
+  code           String   @db.Text
+  language       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relationships
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum Level {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum MentorshipStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  DECLINED
+}
+
+enum ConnectionStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}

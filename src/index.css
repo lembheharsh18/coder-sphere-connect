@@ -1,0 +1,335 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 250 84% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 250 84% 54%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 250 84% 54%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 262 83% 58%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 250 84% 54%;
+
+    /* Custom variables for better theming */
+    --chart-1: 250 84% 54%;
+    --chart-2: 262 83% 58%;
+    --chart-3: 221 83% 53%;
+    --chart-4: 142 76% 36%;
+    --chart-5: 38 92% 50%;
+
+    /* Success/Info colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --info: 221 83% 53%;
+    --info-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 213 31% 91%;
+
+    --primary: 250 84% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 262 83% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    --ring: 250 84% 60%;
+    
+    --sidebar-background: 224 71% 4%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-primary: 250 84% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 262 83% 65%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 216 34% 17%;
+    --sidebar-ring: 250 84% 60%;
+
+    /* Custom variables for better theming */
+    --chart-1: 250 84% 60%;
+    --chart-2: 262 83% 65%;
+    --chart-3: 221 83% 60%;
+    --chart-4: 142 76% 46%;
+    --chart-5: 38 92% 55%;
+
+    /* Success/Info colors */
+    --success: 142 76% 46%;
+    --success-foreground: 0 0% 100%;
+    --info: 221 83% 60%;
+    --info-foreground: 0 0% 100%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Smooth theme transitions */
+  body,
+  .card,
+  .sidebar,
+  button,
+  input,
+  textarea,
+  select {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+  }
+  
+  .code-editor {
+    font-family: "Fira Code", "JetBrains Mono", monospace;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/50;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+/* Enhanced animations */
+@layer utilities {
+  /* 3D card effect */
+  .card-3d {
+    @apply relative transition-all duration-500 perspective-1000;
+    transform-style: preserve-3d;
+  }
+  
+  .card-3d:hover {
+    transform: rotateY(5deg) rotateX(5deg);
+  }
+  
+  /* Perspective utility */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  /* Fade animations */
+  .fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .fade-out {
+    @apply animate-fade-out;
+  }
+  
+  /* Scale animations */
+  .scale-in {
+    @apply animate-scale-in;
+  }
+  
+  .scale-out {
+    @apply animate-scale-out;
+  }
+  
+  /* Hover animations */
+  .hover-scale {
+    @apply transition-transform duration-300;
+  }
+  
+  .hover-scale:hover {
+    @apply transform scale-105;
+  }
+  
+  /* Link animation */
+  .link-underline {
+    @apply relative;
+  }
+  
+  .link-underline::after {
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 content-[''];
+  }
+  
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+  
+  /* Button animations */
+  .button-pulse {
+    @apply animate-pulse;
+  }
+  
+  /* Page transitions */
+  .page-enter {
+    @apply opacity-0 transform translate-x-full;
+  }
+  
+  .page-enter-active {
+    @apply opacity-100 transform translate-x-0 transition duration-300;
+  }
+  
+  .page-exit {
+    @apply opacity-100 transform translate-x-0;
+  }
+  
+  .page-exit-active {
+    @apply opacity-0 transform -translate-x-full transition duration-300;
+  }
+  
+  /* 3D button effect */
+  .button-3d {
+    @apply relative transition-all duration-300;
+    transform-style: preserve-3d;
+  }
+  
+  .button-3d:before {
+    @apply absolute inset-0 bg-primary/20 rounded-md content-[''];
+    transform: translateZ(-10px);
+  }
+  
+  .button-3d:active {
+    transform: translateY(3px);
+  }
+  
+  /* Card hover interaction */
+  .interactive-card {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .interactive-card:hover {
+    @apply shadow-lg transform -translate-y-1;
+  }
+}
+
+/* Keyframes for animations */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-out {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
