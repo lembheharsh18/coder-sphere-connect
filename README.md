@@ -1,73 +1,97 @@
-# Welcome to your Lovable project
+# Coder Sphere Connect 🌐
 
-## Project info
+![License](https://img.shields.io/github/license/lembheharsh18/coder-sphere-connect)
+![Issues](https://img.shields.io/github/issues/lembheharsh18/coder-sphere-connect)
+![Stars](https://img.shields.io/github/stars/lembheharsh18/coder-sphere-connect)
 
-**URL**: https://lovable.dev/projects/a223c918-ee4b-4394-9a9c-5a0491d1a9fd
+**Coder Sphere Connect** is a platform designed to bridge the gap between developers, enabling them to collaborate, share ideas, and grow their professional network within a dedicated "sphere" of coding enthusiasts.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+* **Developer Profiles:** Create and customize profiles showcasing skills, GitHub stats, and portfolios.
+* **Real-time Connection:** Connect with other developers based on shared interests or tech stacks.
+* **Project Collaboration:** Find partners for side projects or open-source contributions.
+* **Discussion Forums:** [Optional] Participate in threads about the latest tech trends.
+* **Responsive Design:** Optimized for both desktop and mobile usage.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a223c918-ee4b-4394-9a9c-5a0491d1a9fd) and start prompting.
+## 🛠️ Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+**Frontend:**
+* [e.g., React.js / Next.js / Vue.js]
+* [e.g., Tailwind CSS / Material UI]
 
-**Use your preferred IDE**
+**Backend:**
+* [e.g., Node.js / Express / Django / FastAPI]
+* [e.g., MongoDB / PostgreSQL / Firebase]
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**Tools & Services:**
+* [e.g., Socket.io for real-time chat]
+* [e.g., Docker, AWS, Vercel]
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## ⚙️ Installation & Setup
 
-Follow these steps:
+Follow these steps to get the project running locally.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
+* Node.js (v14 or higher)
+* [Any other prerequisite, e.g., Python, Docker]
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Steps
 
-# Step 3: Install the necessary dependencies.
-npm i
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/lembheharsh18/coder-sphere-connect.git](https://github.com/lembheharsh18/coder-sphere-connect.git)
+    cd coder-sphere-connect
+    ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+2.  **Install dependencies:**
+    *For Frontend:*
+    ```bash
+    cd client
+    npm install
+    ```
+    *For Backend:*
+    ```bash
+    cd server
+    npm install
+    ```
 
-**Edit a file directly in GitHub**
+3.  **Environment Variables:**
+    Create a `.env` file in the root (or server) directory and add the following:
+    ```env
+    PORT=5000
+    MONGO_URI=your_database_connection_string
+    JWT_SECRET=your_jwt_secret
+    ```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+4.  **Run the application:**
+    ```bash
+    # Command to start the project (e.g., npm start, npm run dev)
+    npm run dev
+    ```
 
-**Use GitHub Codespaces**
+## 📸 Screenshots
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+![Home Page](path/to/screenshot1.png)
+*(Add screenshots of your application here to make the README attractive)*
 
-## What technologies are used for this project?
+## 🤝 Contributing
 
-This project is built with:
+Contributions are welcome! Please follow these steps:
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📄 License
 
-## How can I deploy this project?
+This project is licensed under the [MIT License](LICENSE).
 
-Simply open [Lovable](https://lovable.dev/projects/a223c918-ee4b-4394-9a9c-5a0491d1a9fd) and click on Share -> Publish.
+## 📞 Contact
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Harsh Lembhe**
+* GitHub: [@lembheharsh18](https://github.com/lembheharsh18)
+* Email: [Your Email Here]
