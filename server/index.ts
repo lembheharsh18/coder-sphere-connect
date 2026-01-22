@@ -16,6 +16,7 @@ dotenv.config();
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,10 +49,24 @@ const connectedUsers = new Map<string, string>();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173'],
+  origin: ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173', 'https://coder-sphere-connect.vercel.app'],
   credentials: true
 }));
 app.use(express.json());
+
+// Health check / Root route
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'CoderSphere API Server is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy' });
+});
 
 // Auth Middleware
 const authMiddleware = (req: any, res: any, next: any) => {
@@ -1121,18 +1136,30 @@ app.put('/api/settings/notifications', authMiddleware, async (req: any, res) => 
   }
 });
 
-// Serve static files in production
+// Serve static files in production (only if dist folder exists)
 if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, '../dist');
-  app.use(express.static(distPath));
+  
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
 
-  // Handle SPA routing
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(distPath, 'index.html'));
-    }
-  });
+    // Handle SPA routing
+    app.get('*', (req, res) => {
+      if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(distPath, 'index.html'));
+      }
+    });
+  }
 }
+
+// 404 handler for undefined routes
+app.use((req, res) => {
+  res.status(404).json({ 
+    error: 'Not Found', 
+    message: `Route ${req.method} ${req.path} not found`,
+    availableEndpoints: '/api/*'
+  });
+});
 
 // Start server with Socket.io
 httpServer.listen(PORT, () => {
