@@ -14,6 +14,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const httpServer = createServer(app);
 
@@ -29,7 +35,7 @@ const io = new Server(httpServer, {
 const adapter = new PrismaPg({ connectionString: process.env.POSTGRES_PRISMA_URL });
 const prisma = new PrismaClient({ adapter });
 
-const PORT = process.env.API_PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 // JWT Secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
@@ -1114,6 +1120,19 @@ app.put('/api/settings/notifications', authMiddleware, async (req: any, res) => 
     res.status(500).json({ error: 'Failed to update preferences' });
   }
 });
+
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  const distPath = path.join(__dirname, '../dist');
+  app.use(express.static(distPath));
+
+  // Handle SPA routing
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(distPath, 'index.html'));
+    }
+  });
+}
 
 // Start server with Socket.io
 httpServer.listen(PORT, () => {

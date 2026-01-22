@@ -102,7 +102,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     if (!token) return;
 
     // Create socket connection
-    const newSocket = io(import.meta.env.VITE_API_URL || 'http://localhost:3001', {
+    const newSocket = io(import.meta.env.VITE_API_URL || (import.meta.env.MODE === 'development' ? 'http://localhost:3001' : ''), {
       transports: ['websocket', 'polling'],
       timeout: 20000,
       reconnection: true,
