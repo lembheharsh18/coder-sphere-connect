@@ -1,13 +1,15 @@
 // API Client for CoderSphere
 // All API calls go through this client to communicate with the backend
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.MODE === 'development' ? 'http://localhost:3001' : '');
+// Remove trailing slash from API URL to prevent double slashes
+const rawApiUrl = import.meta.env.VITE_API_URL || (import.meta.env.MODE === 'development' ? 'http://localhost:3001' : '');
+const API_BASE_URL = rawApiUrl.replace(/\/+$/, '');
 
 class ApiClient {
   private baseUrl: string;
   
   constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl.replace(/\/+$/, ''); // Also remove trailing slash in constructor
   }
   
   private getAuthToken(): string | null {
