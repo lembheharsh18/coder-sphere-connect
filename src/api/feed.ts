@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 export const createFeedPost = async (content: string, userId: string, media?: {type: 'image' | 'video', url: string}[]): Promise<FeedPost> => {
   try {
-    const response = await api.createPost("", content);
+    const response = await api.createPost("", content, media);
     const post = response.post;
     return {
       id: post.id,
@@ -20,7 +20,7 @@ export const createFeedPost = async (content: string, userId: string, media?: {t
       likes: 0,
       comments: 0,
       hasLiked: false,
-      media: media || [],
+      media: response.post.media || media || [],
       commentsList: []
     };
   } catch (error: any) {
@@ -46,7 +46,7 @@ export const getFeedPosts = async (userId: string | undefined, page: number = 1,
       likes: post.likesCount || 0,
       comments: post.commentsCount || post.comments?.length || 0,
       hasLiked: post.hasLiked || false,
-      media: [],
+      media: post.media || [],
       commentsList: (post.comments || []).map((c: any) => ({
         id: c.id,
         content: c.content,

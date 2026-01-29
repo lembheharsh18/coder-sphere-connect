@@ -185,10 +185,10 @@ class ApiClient {
     return this.request<{ success: boolean; posts: any[] }>('/api/posts');
   }
   
-  async createPost(title: string, content: string) {
+  async createPost(title: string, content: string, media?: Array<{type: string, url: string}>) {
     return this.request<{ success: boolean; post: any }>('/api/posts', {
       method: 'POST',
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content, media }),
     });
   }
   

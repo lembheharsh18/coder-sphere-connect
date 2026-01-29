@@ -864,12 +864,13 @@ app.get('/api/posts', async (req, res) => {
 // Create post
 app.post('/api/posts', authMiddleware, async (req: any, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, media } = req.body;
     
     const post = await prisma.post.create({
       data: {
         title,
         content,
+        media: media || [],
         userId: req.user.id,
       },
       include: {
